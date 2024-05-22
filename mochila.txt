@@ -1,0 +1,34 @@
+Ao se planejar para uma viagem você precisará arrumar a sua mala, mas nem sempre essa é uma tarefa descomplicada. 
+Claro que existem coisas que são mais fáceis de organizar, você obviamente irá precisar, por exemplo, da sua escova de dente,
+dizemos então que esse é um item que possui uma maior prioridade. 
+Mas mesmo assim você precisará decidir entre vários outros itens que gostaria de levar, como livros, roupas, acessórios, etc. 
+Todos esses itens possuem diferentes prioridades, então como você organizaria sua mala?
+
+A primeira resposta que pode vir à sua mente é de selecionar os itens com maior prioridade, mas nem sempre essa é uma solução satisfatória. 
+Sua mala possui um espaço limitado, se o item com maior prioridade for de um tamanho suficientemente grande para a ocupar por completo, 
+nada mais poderá ser levado, e não faz muito sentido viajar com apenas um item, não é? Chamamos esse método de “Método Guloso”, que apesar
+de ser rápido e prático não é bom sempre, então o que fazer?
+
+Esse é o Problema da Mochila e o nosso objetivo é maximizar o número de itens que iremos levar, levando em consideração as suas prioridades, 
+tamanho e o espaço disponível na nossa mochila.
+
+Formalizando
+Considerando que você possui uma mochila com capacidade de peso  W  e um conjunto de  n  itens, onde cada item  i  tem um peso  wi  e um valor
+vi , o modelo matemático é o seguinte:
+
+xi=
+{
+1, se o item i é selecionado
+0, caso contrário.
+}
+para i=1,2,…,n. 
+
+          n
+Maximizar ∑ vixi
+          i=1
+
+sujeito a:
+    n
+    ∑ wixi ≤ W
+    i=1
+    xi∈{0,1} para i=1,2,…,n.

@@ -1,0 +1,33 @@
+O Problema da Atribuicão
+
+Existem n pessoas disponíveis para realizar n trabalhos. Cada uma dessas pessoas é designada para realizar
+exatamente um trabalho, e cada trabalho não pode ser designado para mais uma pessoa. Algumas pessoas
+são mais adequadas para determinadas tarefas do que outras, e existe um custo estimado Cij : se a pessoa i
+for designada para o trabalho j. O problema consiste em encontrar uma solucão que minimize o custo dessa
+distribuicão.
+Vamos formulá-lo por Programacão Linear Inteira Binária:
+Definição das variáveis
+
+Xij =
+{
+1 se a pessoa i realiza o trabalho j,
+0 caso contr ́ario.
+}
+
+Definição das restrições
+
+Cada pessoa i realiza apenas um trabalho:
+    n∑ j=1
+Xij = 1 para i = 1, . . . , n.
+
+Cada trabalho j  ́e realizado por uma pessoa:
+    n∑ i=1
+Xij = 1 para j = 1, . . . , n.
+
+As variáveis são binárias (0-1):
+Xij ∈ {0, 1} para i = 1, . . . , n, j = 1, . . . , n.
+
+Definição da função objetivo
+O custo da atribuição deve ser minimizado, portanto, a nossa função objetiva  ́e de minimização:
+min n∑ n∑ cij xij
+    i=1 j=1
