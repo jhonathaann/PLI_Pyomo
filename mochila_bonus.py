@@ -78,12 +78,25 @@ def mochila_bonus(nome_arquivo):
     # ==== RESTRICOES
 
     # restricao 1: os itens colocados na mochila devem ter um peso total <= capacidade da mochila
-    modelo.rest1 = pyEnv.Constraint(modelo.J, sum(modelo.p[i] * modelo.x[i] for i in modelo.I) <= capacidade)
+    def restricao_um(modelo, i):
+        return sum(modelo.p[i] * modelo.x[i] for i in modelo.I) <= capacidade
+    
+    modelo.rest1 = pyEnv.Constraint(modelo.J, rule=restricao_um)
 
     # restricao 2: sistemas de equacoes que garante que o bonus so seja colocado na solucao quando ambos os itens estivem na solucao
-    modelo.rest2 = pyEnv.Constraint(modelo.ab, modelo.y[i,j] <= modelo.x[i])
-    modelo.rest3 = pyEnv.Constraint(modelo.ab, modelo.y[i,j] <= modelo.x[j])
-    modelo.rest4 = pyEnv.Constraint(modelo.ab, modelo.y[i,j] >= modelo.x[i] + modelo.x[j] - 1)
+    def restricao_dois(modelo,i,j):
+        return modelo.y[i,j] <= modelo.x[i]
+    
+    modelo.rest2 = pyEnv.Constraint(modelo.ab, rule=restricao_dois)
+    
+    def restricao_tres(modelo,i,j):
+        return modelo.y[i,j] <= modelo.x[j]
+
+    modelo.rest3 = pyEnv.Constraint(modelo.ab, rule=restricao_tres)
+
+    def restricao_quatro(modelo,i,j):
+        return  modelo.y[i,j] >= modelo.x[i] + modelo.x[j] - 1
+    modelo.rest4 = pyEnv.Constraint(modelo.ab, rule=restricao_quatro)
 
     # ==== SOLVER
     solver = pyEnv.SolverFactory('glpk')
@@ -98,6 +111,19 @@ def mochila_bonus(nome_arquivo):
     for i in modelo.I:
         mochila.append(modelo.x[i]())
 
-    return resultado_funcao, mochila
+    return resultado_funcao, mochila, n, pesos_itens
 
-resultado_funcao, mochila = mochila_bonus("teste.txt")
+resultado_funcao, mochila, n, pesos_itens = mochila_bonus("teste.txt")
+
+print("valor da funcao objetivo:", resultado_funcao)
+
+print("itens que foram colocados na mochila:")
+
+peso = 0
+for i in range(n):
+  print(f"item {i}: {mochila[i]}")
+  if mochila[i] == 0:
+    peso = peso + pesos_itens[i]
+
+print("peso total dos itens: ", peso)
+
